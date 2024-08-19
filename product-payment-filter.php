@@ -8,7 +8,7 @@
  * @package           Product_Payment_Filter
  *
  * @wordpress-plugin
- * Plugin Name:       Maneks - Product Payment Filter
+ * Plugin Name:       Product Payment Filter
  * Plugin URI:        https://1.com
  * Description:       This plugin enables the user to select products and payment methods which not to show if the product is in the cart.
  * Version:           1.0.0
