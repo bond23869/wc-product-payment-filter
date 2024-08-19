@@ -16,6 +16,10 @@ class WC_Payment_Method_Filter {
             return $available_gateways;
         }
 
+        if(!WC()->cart) {
+            return $available_gateways;
+        }
+
         $cart_items = WC()->cart->get_cart();
         $settings = get_field('payment_method_filter_products', 'option');
 
