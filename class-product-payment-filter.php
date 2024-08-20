@@ -10,16 +10,12 @@ class WC_Payment_Method_Filter {
     }
 
     public function filter_payment_gateways($available_gateways) {
-        if (is_admin()) {
-            return $available_gateways;
-        }
-
-        if(!WC()->cart) {
+        if (is_admin() || !is_checkout()) {
             return $available_gateways;
         }
 
         $cart_items = WC()->cart->get_cart();
-        $settings = get_field('payment_method_filter_products', 'option');
+        $settings = get_field('payment_method_filter_products', 'option') ?? [];
 
         if (!$settings) {
             return $available_gateways;
