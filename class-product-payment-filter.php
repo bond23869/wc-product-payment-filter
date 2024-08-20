@@ -6,7 +6,6 @@ if (!defined('ABSPATH')) {
 class WC_Payment_Method_Filter {
     public function __construct() {
         add_filter('woocommerce_available_payment_gateways', array($this, 'filter_payment_gateways'));
-        add_filter('acf/load_field/name=hidden_payment_fields', array($this, 'load_payment_gateways'));
     }
 
     public function filter_payment_gateways($available_gateways) {
@@ -33,16 +32,5 @@ class WC_Payment_Method_Filter {
         }
 
         return $available_gateways;
-    }
-
-    public function load_payment_gateways($field) {
-        $gateways = WC()->payment_gateways->payment_gateways();
-        $field['choices'] = array();
-        foreach ($gateways as $gateway) {
-            if($gateway->enabled == 'yes'){
-                $field['choices'][$gateway->id] = $gateway->get_title();
-            }
-        }
-        return $field;
     }
 }
