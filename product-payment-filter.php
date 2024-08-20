@@ -67,6 +67,8 @@ require plugin_dir_path( __FILE__ ) . 'class-product-payment-filter.php';
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-product-payment-filter-api.php';
 
+require_once plugin_dir_path(__FILE__) . 'acf-fields.php';
+
 
 /**
  * Begins execution of the plugin.

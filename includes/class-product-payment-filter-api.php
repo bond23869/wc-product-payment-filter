@@ -91,23 +91,28 @@ class WC_Payment_Gateway_Filter_API {
     }
 
     public function delete_product($request) {
-        $product_id = $request['id'];
+    $product_id = $request['id'];
 
-        $current_settings = get_field('payment_method_filter_products', 'option') ?: array();
+    $current_settings = get_field('payment_method_filter_products', 'option') ?: array();
 
-        // Find and remove the product
-        $current_settings = array_filter($current_settings, function($item) use ($product_id) {
-            return $item['product'] != $product_id;
-        });
+    // Find and remove the product
+    $current_settings = array_filter($current_settings, function($item) use ($product_id) {
+        // Check if the product is an object and has an 'ID' property
+        if (is_object($item['product']) && property_exists($item['product'], 'ID')) {
+            return $item['product']->ID != $product_id;
+        }
+        // If it's not an object or doesn't have an ID, keep it in the array
+        return true;
+    });
 
-        // Re-index the array
-        $current_settings = array_values($current_settings);
+    // Re-index the array
+    $current_settings = array_values($current_settings);
 
-        // Update the ACF field
-        update_field('payment_method_filter_products', $current_settings, 'option');
+    // Update the ACF field
+    update_field('payment_method_filter_products', $current_settings, 'option');
 
-        return new WP_REST_Response(array('message' => 'Product removed successfully'), 200);
-    }
+    return new WP_REST_Response(array('message' => 'Product removed successfully'), 200);
+}
 
     public function get_settings($request) {
         $settings = get_field('payment_method_filter_products', 'option') ?: array();
